@@ -36,16 +36,12 @@ let windowOuterHeight = 0;
 
 //Вариант сохранения данных
 window.onbeforeunload = function() {
+  if (hidd===NaN) hidd=0;
   localStorage.setItem('hidd',hidd)
+  console.log(localStorage+' '+'save')
 };
 console.log(localStorage)
-if (localStorage.getItem('hidd')!=NaN) {
-  hidd=parseInt(localStorage.getItem('hidd'))
-  console.log(hidd)
-  console.log(localStorage)
-}else{
-  hidd=0;
-}
+hidd=parseInt(localStorage.getItem('hidd'))
 
 // данные через json
 function mix() 
@@ -91,7 +87,6 @@ function mix()
 //Подсчёт сворачиваний экрана   //todo3
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === 'hidden') {
-    if (hidd===NaN) hidd=0;
     hidd += 1
     console.log(hidd)
     hidd_time.push(vrema)
