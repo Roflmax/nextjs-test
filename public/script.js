@@ -43,6 +43,8 @@ if (localStorage.getItem('hidd')!=NaN) {
   hidd=parseInt(localStorage.getItem('hidd'))
   console.log(hidd)
   console.log(localStorage)
+}else{
+  hidd=0;
 }
 
 // данные через json
