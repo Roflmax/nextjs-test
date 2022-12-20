@@ -41,8 +41,10 @@ window.onbeforeunload = function() {
 console.log(localStorage)
 if (localStorage.getItem('hidd')!=NaN) {
   hidd=parseInt(localStorage.getItem('hidd'))
-  localStorage.clear('hidd')
+  console.log(hidd)
   console.log(localStorage)
+}else{
+  hidd=0;
 }
 
 // данные через json
