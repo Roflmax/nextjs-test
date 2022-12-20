@@ -36,12 +36,13 @@ let windowOuterHeight = 0;
 
 //Вариант сохранения данных
 window.onbeforeunload = function() {
-  if (hidd===NaN) hidd=0;
+  if(isNaN(hidd)) hidd=0
   localStorage.setItem('hidd',hidd)
   console.log(localStorage+' '+'save')
 };
-console.log(localStorage)
+console.log(localStorage.getItem('hidd'))
 hidd=parseInt(localStorage.getItem('hidd'))
+console.log(typeof(hidd))
 
 // данные через json
 function mix() 
