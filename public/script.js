@@ -1,8 +1,26 @@
 
+
 //Главный код
 
+//Все используемые глобальные переменные:
+let hidd = 0;
+let hidd_time=[];
+let sec_not_full=0;
+let flag=0;
+let promej_time=[];
+let start_screen;
+let end_screen;
+let vrema=0;
+let startTime = Date.now() 
+let screenWidth = window.screen.width;
+let screenHeight = window.screen.height;
+let copy = 0;
+let paste = 0;
+let X = document.getElementById('X');
+let Y = document.getElementById('Y');
+let windowOuterWidth = 0;
+let windowOuterHeight = 0;
 
-//Настройка проверки
 
 //Нужно сделать так, чтобы на нашей странице мы могли менять условия проверки.
 //Для удобного поиска в коде ищи по номеру задания. Например, первое задание это "todo1"
@@ -16,7 +34,19 @@
 //3)Нам нужна галка, которая отключает/включает подсчёт сворачиваний //todo3
 //4)Подобная выше галка, но для разрешение экрана //todo4
 
-function mix() //все данные через json
+//Вариант сохранения данных
+window.onbeforeunload = function() {
+  localStorage.setItem('hidd',hidd)
+};
+console.log(localStorage)
+if (localStorage.getItem('hidd')!=NaN) {
+  hidd=parseInt(localStorage.getItem('hidd'))
+  localStorage.clear('hidd')
+  console.log(localStorage)
+}
+
+// данные через json
+function mix() 
         {
           //Подсчёт штраф-баллов
           let cheat_point=0
@@ -45,36 +75,29 @@ function mix() //все данные через json
             screen_now: [windowOuterWidth, windowOuterHeight],
             time: vrema
           };
-          console.log(user)
-         // $.ajax({
-         //   url: "cgi-bin/obrjson.py",
-         //   type: "post",
-         //   data: JSON.stringify({user}),
-         //   dataType: "json",
-         // });
+          alert(JSON.stringify(user))
+         //$.ajax({
+         //  url: "/result",
+         //  type: "post",
+         //  data: JSON.stringify({user}),
+         //  contentType: "application/json",
+         //  complete: callback
+         //});
             
         };
         
-
-
-
 //Подсчёт сворачиваний экрана   //todo3
-let hidd = 0
-let hidd_time=[]
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === 'hidden') {
     hidd += 1
+    console.log(hidd)
     hidd_time.push(vrema)
     document.getElementById('demo').innerHTML = hidd;
   }
 });
 
 //Сравнение разрешения экрана браузера с монитором  //todo4
-let sec_not_full=0
-let flag=0;
-let promej_time=[]
-let start_screen;
-let end_screen;
+
 //document.addEventListener("DOMContentLoaded", function (event) {
 setInterval(() => {
   if (screenWidth-200>windowOuterWidth || screenHeight-200>windowOuterHeight){  //todo2
@@ -97,8 +120,7 @@ setInterval(() => {
 
 
 //Секундомер 
-let vrema=0;
-startTime = Date.now() 
+
 timerInterval = setInterval(function printTime() {
   elapsedTime = Date.now()- startTime;
   vrema=timeToString(elapsedTime)
@@ -136,8 +158,7 @@ function timeToString(time) {
 //Доб инфорамция Ниже
 
 //Разрешение по кофигурации
-let screenWidth = window.screen.width
-let screenHeight = window.screen.height
+
 setInterval(function(){
 screenWidth = window.screen.width
 screenHeight = window.screen.height
@@ -147,7 +168,7 @@ document.getElementById('screen').innerHTML = 'разрешение экрана
 
 
 //CTRL+C
-let copy = 0
+
 document.addEventListener('copy', function () {
   copy += 1
   document.getElementById('cop').innerHTML = copy;
@@ -155,15 +176,14 @@ document.addEventListener('copy', function () {
 });
 
 //CTRL+V
-let paste = 0
+
 document.addEventListener('paste', function () {
   paste += 1
   document.getElementById('past').innerHTML = paste;
 });
 
 //Положение мыши
-let X = document.getElementById('X');
-let Y = document.getElementById('Y');
+
 
 function pos(e) {
   X.value = e.pageX;
@@ -183,8 +203,7 @@ addEventListener('mousemove', pos, false);
 //  document.getElementById('nowsize_vnesh').innerHTML = 'разрешение окна = ' + windowOuterWidth + 'x' + windowOuterHeight
 //  };
 //});
-let windowOuterWidth =0
-let windowOuterHeight = 0
+
 //document.addEventListener("DOMContentLoaded", function (event) {
 setInterval(() => {windowOuterWidth = window.outerWidth
  windowOuterHeight = window.outerHeight
@@ -220,24 +239,3 @@ setInterval(() => {windowOuterWidth = window.outerWidth
 //if (screenWidth-200>windowOuterWidth || screenHeight-200>windowOuterHeight){
 //  console.log(`${screenWidth}--${windowOuterWidth} || ${screenHeight}--${windowOuterHeight}`)
 //}};
-
-
-
-//Все данные через form (не нужно)
-function result() {
-
-  //Подсчёт штраф-баллов
-  let cheat_point=0
-  cheat_point+=10*hidd  //сворачивание 10 баллов
-  cheat_point+=sec_not_full //Минута 60 баллов
-
-  //что отправляем
-  document.getElementById("hid1").value = hidd;
-  document.getElementById("CTRLC").value = copy;
-  document.getElementById("CTRLV").value = paste;
-  document.getElementById("display1").value = [screenWidth, screenHeight];
-  document.getElementById("point").value = cheat_point
- // document.getElementById("screen1").value = [windowOuterWidth_first, windowOuterHeight_first]; Разрешение при загрузке не нужно
-  document.getElementById("screen_now1").value =  [windowOuterWidth, windowOuterHeight];
-  document.getElementById("time_of_violation").value = vrema;
-}
