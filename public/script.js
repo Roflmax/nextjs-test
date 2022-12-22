@@ -1,46 +1,38 @@
 
+//(function () { //защита глобальных переменных
+
 
 //Главный код
 
 //Все используемые глобальные переменные:
-let hidd = 0;
-let hidd_time=[];
-let sec_not_full=0;
-let flag=0;
-let promej_time=[];
-let start_screen;
-let end_screen;
-let vrema=0;
-let startTime = Date.now() 
-let screenWidth = window.screen.width;
-let screenHeight = window.screen.height;
-let copy = 0;
-let paste = 0;
-let X = document.getElementById('X');
-let Y = document.getElementById('Y');
-let windowOuterWidth = 0;
-let windowOuterHeight = 0;
+let hidd = 0; //Количество потери видимости страницы
+let hidd_time=[];//Когда была потеряна видимость
+let sec_not_full=0;//Сколько секунд было открыто неполное разрешение страницы
+let flag=0;//флаг, чтобы были загруженны достоверные данные 
+let promej_time=[];//Периоды времени неполного разрешения страницы
+let start_screen;//Начальный период времени разреш.ст.
+let end_screen;//Конечный период времени разреш.ст.
+let vrema=0;//время из секундомера. |искать по //Секундомер 
+let startTime = Date.now() //Нужно для нормальной работы секундомера
+let screenWidth = window.screen.width;//Кофигурация монитора
+let screenHeight = window.screen.height;//Кофигурация монитора
+let copy = 0;//Кол-ов сочетания клавиш CTRL+C
+let paste = 0;//Кол-ов сочетания клавиш CTRL+V
+let X = document.getElementById('X');//Координаты мыши по x
+let Y = document.getElementById('Y');//Координаты мыши по y
+let windowOuterWidth = 0;//Разрешение страницы в текущий момент
+let windowOuterHeight = 0;//Разрешение страницы в текущий момент
 
 
-//Нужно сделать так, чтобы на нашей странице мы могли менять условия проверки.
-//Для удобного поиска в коде ищи по номеру задания. Например, первое задание это "todo1"
-//Каким параментры проверки мы хотим задавать?
-
-//1)Ограничение для cheat_point. Т.е. мы должны иметь возможность вместо нынешних "30" записать другое число на нашей Test-странице. //todo1
-
-//2)Нужно менять значения дозволенного разрешения. У нас сейчас по вертикали и горизонтали из разрешения конфигурации вычитается 200, чтобы узнать, что экран открыт во весь экран.
-// Нам нужна возможность увеличить эти 200 отдельно для вериткали и горизонтали на нашей  Test-странице//todo2
-
-//3)Нам нужна галка, которая отключает/включает подсчёт сворачиваний //todo3
-//4)Подобная выше галка, но для разрешение экрана //todo4
+//Главный код
 
 //Вариант сохранения данных
 window.onbeforeunload = function() {
-  if(isNaN(hidd)) hidd=0
   localStorage.setItem('hidd',hidd)
   console.log(localStorage+' '+'save')
 };
 console.log(localStorage.getItem('hidd'))
+if(isNaN(hidd)) hidd=0
 hidd=parseInt(localStorage.getItem('hidd'))
 console.log(typeof(hidd))
 
@@ -96,8 +88,6 @@ document.addEventListener("visibilitychange", () => {
 });
 
 //Сравнение разрешения экрана браузера с монитором  //todo4
-
-//document.addEventListener("DOMContentLoaded", function (event) {
 setInterval(() => {
   if (screenWidth-200>windowOuterWidth || screenHeight-200>windowOuterHeight){  //todo2
     console.log(`${screenWidth}--${windowOuterWidth} || ${screenHeight}--${windowOuterHeight}`)
@@ -119,7 +109,6 @@ setInterval(() => {
 
 
 //Секундомер 
-
 timerInterval = setInterval(function printTime() {
   elapsedTime = Date.now()- startTime;
   vrema=timeToString(elapsedTime)
@@ -154,13 +143,11 @@ function timeToString(time) {
 
 
 
-//Доб инфорамция Ниже
+//Доп инфорамция Ниже
 
 //Разрешение по кофигурации
 
 setInterval(function(){
-screenWidth = window.screen.width
-screenHeight = window.screen.height
 document.getElementById('screen').innerHTML = 'разрешение экрана монитора = ' + screenWidth + 'x' + screenHeight
 },1000)
 
@@ -182,7 +169,6 @@ document.addEventListener('paste', function () {
 });
 
 //Положение мыши
-
 
 function pos(e) {
   X.value = e.pageX;
@@ -238,3 +224,4 @@ setInterval(() => {windowOuterWidth = window.outerWidth
 //if (screenWidth-200>windowOuterWidth || screenHeight-200>windowOuterHeight){
 //  console.log(`${screenWidth}--${windowOuterWidth} || ${screenHeight}--${windowOuterHeight}`)
 //}};
+//}());

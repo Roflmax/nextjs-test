@@ -245,7 +245,7 @@ export default function Home() {
                   </ul>
 
               </div>
-              <a href="/result" className="test-submit" type="submit" onClick={() =>mix()}>Проверить</a>
+               <a href="/result" className="test-submit" type="submit" onClick={() =>mix()}>Проверить</a>
 
               <section id="info">
               Переключение
