@@ -28,13 +28,11 @@ let windowOuterHeight = 0;//Разрешение страницы в текущ�
 
 //Вариант сохранения данных
 window.onbeforeunload = function() {
+  if(isNaN(hidd)) hidd=0
   localStorage.setItem('hidd',hidd)
   console.log(localStorage+' '+'save')
 };
-console.log(localStorage.getItem('hidd'))
-if(isNaN(hidd)) hidd=0
-hidd=parseInt(localStorage.getItem('hidd'))
-console.log(typeof(hidd))
+if (localStorage.length>0) hidd=parseInt(localStorage.getItem('hidd'))
 
 // данные через json
 function mix() 
